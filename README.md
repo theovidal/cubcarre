@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="webapp/public/cubcarre.png" alt="CubCarré logo">
+    <img src="webapp/public/cubcarre.png" alt="CubCarré logo" width="30%">
     <h1>CubCarré</h1>
     <h3>Rubik's cube timer on a Telegram bot</h3>
     <a href="https://t.me/cubcarre_bot">Add the bot</a> — <a href="./LICENSE">License</a>
