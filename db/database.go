@@ -13,6 +13,9 @@ func OpenDatabase() *gorm.DB {
 	if err != nil {
 		log.Fatalf("Failed to connect database: %v\n", err)
 	}
-	db.AutoMigrate()
+	err = db.AutoMigrate(&Time{})
+	if err != nil {
+		log.Fatalf("Failed to migrate models: %v\n", err)
+	}
 	return db
 }

@@ -10,7 +10,7 @@
 Thanks for participating in CubCarré's improvement and/or debugging! First, check the following requirements:
 
 - Git, for version control
-- Golang 1.16 or higher with go-modules for dependencies
+- Golang 1.18 or higher with go-modules for dependencies
 - Node.js (tested on v14+) with npm or yarn for dependencies
 - A SQLite database file (whatever location)
 

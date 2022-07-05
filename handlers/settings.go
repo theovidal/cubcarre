@@ -5,6 +5,6 @@ import (
 	"github.com/theovidal/cubcarre/lib"
 )
 
-func SettingsCommand(bot *lib.Bot, update *telegram.Update, chatID int64, args []string) error {
+func SettingsCallback(bot *lib.Bot, update *telegram.Update, userID, chatID int64, args []string) error {
 	return nil
 }

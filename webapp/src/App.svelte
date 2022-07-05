@@ -1,6 +1,9 @@
 <script>
   import "./telegram-web-app"
+  import config from './config'
+
   let Telegram = window.Telegram.WebApp
+  let validData = false
   
   let waiting = false
   let ready = false
@@ -19,8 +22,6 @@
   $: data = time + (cube === null ? '' : `:${cube}`)
 
   if (cube !== null) sublabel = `Selected cube: ${cube}`
-
-  Telegram.MainButton.setParams({ is_visible: true })
 
   function startWait() {
     if (!ready && !solving) {
@@ -78,8 +79,18 @@
       label = display
       solving = false
 
-      Telegram.MainButton.setParams({ text: display })
-      Telegram.sendData(data)
+      let url = new URL(`http://localhost.com/?${Telegram.initData}`)
+
+      let body = new FormData()
+      body.append('cube', cube)
+      body.append('userID', JSON.parse(url.searchParams.get('user'))["id"])
+      body.append('queryID', url.searchParams.get('query_id'))
+      body.append('time', time.toString())
+      
+      fetch(`${config.botURL}/save`, {
+        method: 'POST',
+        body
+      })
     }
   }
 

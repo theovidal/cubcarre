@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strconv"
 	"strings"
 
 	telegram "github.com/go-telegram-bot-api/telegram-bot-api/v5"
@@ -24,10 +25,15 @@ func HandleCallback(bot *lib.Bot, update telegram.Update) error {
 	if update.CallbackQuery.Data[0] == '/' {
 		args := strings.Split(update.CallbackQuery.Data, " ")
 		cmd, _ := bot.Commands[args[0][1:]]
-		return cmd(bot, &update, update.Message.Chat.ID, args[1:])
+		return cmd(bot, &update, update.CallbackQuery.Message.Chat.ID, args[1:])
+
 	} else {
 		args := strings.Split(update.CallbackQuery.Data, ":")
 		callback, _ := bot.Callbacks[args[0]]
-		return callback(bot, &update, update.Message.Chat.ID, args[1:])
+		userID, err := strconv.ParseInt(args[1], 10, 0)
+		if err != nil {
+			return err
+		}
+		return callback(bot, &update, userID, update.CallbackQuery.Message.Chat.ID, args[1:])
 	}
 }

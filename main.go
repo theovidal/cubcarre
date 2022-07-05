@@ -5,7 +5,6 @@ import (
 	"math"
 	"os"
 	"os/signal"
-	"strings"
 	"syscall"
 
 	telegram "github.com/go-telegram-bot-api/telegram-bot-api/v5"
@@ -23,18 +22,19 @@ func main() {
 		log.Panic(err)
 	}
 
-	bot := &lib.Bot{
+	bot := lib.Bot{
 		BotAPI: api,
-		Commands: map[string]lib.Handler{
-			"/start":      handlers.StartCommand,
-			"/statistics": handlers.StatsCommand,
-			"/settings":   handlers.SettingsCommand,
-			"/selectcube": handlers.SelectCubeCommand,
+		Commands: map[string]lib.Command{
+			"/start": handlers.StartCommand,
 		},
-		Callbacks: map[string]lib.Handler{
-			"menu": handlers.MainMenuCallback,
+		Callbacks: map[string]lib.Callback{
+			"menu":       handlers.MainMenuCallback,
+			"statistics": handlers.StatsCallback,
+			"settings":   handlers.SettingsCallback,
+			"selectcube": handlers.SelectCubeCallback,
 		},
-		Db: db.OpenDatabase(),
+		Db:          db.OpenDatabase(),
+		WebCallback: handlers.SaveTime,
 	}
 
 	if os.Getenv("DEBUG") == "true" {
@@ -52,9 +52,8 @@ func main() {
 
 	go func() {
 		for update := range updates {
-			println("update")
 			if update.CallbackQuery != nil {
-				err = HandleCallback(bot, update)
+				err = HandleCallback(&bot, update)
 				if err != nil {
 					lib.LogError("Error handling a callback: %s", err)
 				}
@@ -63,18 +62,15 @@ func main() {
 					if update.Message.From.UserName != os.Getenv("TELEGRAM_USER") {
 						continue
 					}
-					if err = HandleCommand(bot, update); err != nil {
+					if err = HandleCommand(&bot, update); err != nil {
 						lib.LogError("Error handling a command: %s", err)
-					}
-				} else if update.Message.WebAppData != nil {
-					err = handlers.SaveTime(bot, &update, update.Message.Chat.ID, strings.Split(update.Message.WebAppData.Data, ":"))
-					if err != nil {
-						lib.LogError("Error handling webapp response: %s", err)
 					}
 				}
 			}
 		}
 	}()
+
+	go webServer(bot)
 
 	// Wait here until CTRL-C or other term signal is received.
 	sc := make(chan os.Signal, 1)
