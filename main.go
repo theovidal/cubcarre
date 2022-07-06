@@ -28,11 +28,14 @@ func main() {
 			"/start": handlers.StartCommand,
 		},
 		Callbacks: map[string]lib.Callback{
-			"menu":          handlers.MainMenuCallback,
-			"statistics":    handlers.StatsCallback,
-			"settings":      handlers.SettingsCallback,
+			"menu":       handlers.MainMenuCallback,
+			"statistics": handlers.StatsCallback,
+			"settings":   handlers.SettingsCallback,
+
 			"selectpuzzle":  handlers.SelectPuzzleCallback,
 			"selectionmade": handlers.SelectionMadeCallback,
+
+			"mark": handlers.MarkCallback,
 		},
 		Db:          db.OpenDatabase(),
 		WebCallback: handlers.SaveTime,

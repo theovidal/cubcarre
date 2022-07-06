@@ -59,7 +59,7 @@ func SelectionMadeCallback(bot *lib.Bot, update *telegram.Update, userID, chatID
 		ChatID: chatID,
 		MenuButton: &telegram.MenuButton{
 			Type: "web_app",
-			Text: "⌚ Timer",
+			Text: fmt.Sprintf("⌚ %s", args[0]),
 			WebApp: &telegram.WebAppInfo{
 				URL: fmt.Sprintf("%s/?cube=%s", os.Getenv("WEBAPP_URL"), args[0]),
 			},
