@@ -34,6 +34,6 @@ func HandleCallback(bot *lib.Bot, update telegram.Update) error {
 		if err != nil {
 			return err
 		}
-		return callback(bot, &update, userID, update.CallbackQuery.Message.Chat.ID, args[1:])
+		return callback(bot, &update, userID, update.CallbackQuery.Message.Chat.ID, args[2:])
 	}
 }

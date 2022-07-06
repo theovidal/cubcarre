@@ -15,7 +15,7 @@ type Bot struct {
 	*telegram.BotAPI
 	// Commands associates command's name to its function
 	Commands map[string]Command
-	// Commands associates callback's name to its function
+	// Callbacks associates callback's name to its function
 	Callbacks map[string]Callback
 	// WebCallback is the function handling the webapp returning from user input
 	WebCallback func(bot *Bot, queryID string, userID int64, time uint64, cube string) error

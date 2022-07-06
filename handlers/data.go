@@ -12,6 +12,7 @@ import (
 )
 
 func SaveTime(bot *lib.Bot, queryID string, userID int64, userTime uint64, cube string) error {
+	// TODO: data validation
 	bot.Db.Create(&db.Time{
 		User:  userID,
 		Cube:  cube,
