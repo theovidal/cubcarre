@@ -4,6 +4,8 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"log"
+	"fmt"
+	"os"
 	"net/http"
 	"strconv"
 
@@ -53,5 +55,6 @@ func webServer(bot lib.Bot) {
 		w.WriteHeader(http.StatusCreated)
 	})
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	lib.LogSuccess("Webserver listening on port %s", os.Getenv("WEBSERVER_PORT"))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("WEBSERVER_PORT")), nil))
 }
