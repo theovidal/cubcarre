@@ -40,11 +40,12 @@ func webServer(bot lib.Bot) {
 		userID, _ := strconv.ParseInt(req.FormValue("userID"), 10, 0)
 		time, _ := strconv.ParseUint(req.FormValue("time"), 10, 0)
 		cube := req.FormValue("cube")
+		scramble := req.FormValue("scramble")
 		if queryID == "" || userID == 0 || time == 0 || cube == "" {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
-		if err := bot.WebCallback(&bot, queryID, userID, time, cube); err != nil {
+		if err := bot.WebCallback(&bot, queryID, userID, time, cube, scramble); err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}

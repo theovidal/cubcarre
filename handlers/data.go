@@ -11,12 +11,13 @@ import (
 	"github.com/theovidal/cubcarre/lib"
 )
 
-func SaveTime(bot *lib.Bot, queryID string, userID int64, userTime uint64, cube string) (err error) {
+func SaveTime(bot *lib.Bot, queryID string, userID int64, userTime uint64, cube, scramble string) (err error) {
 	// TODO: data validation
 	res := db.Time{
-		User:  userID,
-		Cube:  cube,
-		Value: userTime,
+		User:     userID,
+		Cube:     cube,
+		Scramble: scramble,
+		Value:    userTime,
 	}
 	if err = bot.Db.Create(&res).Error; err != nil {
 		return

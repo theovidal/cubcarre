@@ -18,7 +18,7 @@ type Bot struct {
 	// Callbacks associates callback's name to its function
 	Callbacks map[string]Callback
 	// WebCallback is the function handling the webapp returning from user input
-	WebCallback func(bot *Bot, queryID string, userID int64, time uint64, cube string) error
+	WebCallback func(bot *Bot, queryID string, userID int64, time uint64, cube, scramble string) error
 	// Db is the SQL database
 	Db *gorm.DB
 }

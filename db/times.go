@@ -5,6 +5,7 @@ type Time struct {
 	ID        uint `gorm:"primaryKey,autoIncrement"`
 	User      int64
 	Cube      string
+	Scramble  string
 	Timestamp int64 `gorm:"autoCreateTime"`
 	Value     uint64
 	PTwo      bool
