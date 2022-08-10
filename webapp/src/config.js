@@ -1,3 +1,3 @@
 export default {
-    botURL: 'https://cubcarre.exybo.re'
+    botURL: 'https://cubcarre.theovld.fr'
 }
